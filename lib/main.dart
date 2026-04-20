@@ -27,7 +27,8 @@ class SignupPage extends StatefulWidget {
 
 class WelcomeScreen extends StatelessWidget {
   final String name;
-  const WelcomeScreen({super.key, required this.name});
+  final String avatar;
+  const WelcomeScreen({super.key, required this.name, required this.avatar});
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +38,16 @@ class WelcomeScreen extends StatelessWidget {
         backgroundColor: Colors.purple,
       ),
       body: Center(
-        child: Text(
-          'Welcome, $name!',
-          style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(avatar, style: const TextStyle(fontSize: 72)),
+            const SizedBox(height: 16),
+            Text(
+              'Welcome, $name!',
+              style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
       ),
     );
@@ -55,6 +63,9 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
+
+  final List<String> _avatars = ['🧑', '👩', '🧔', '👱', '🧕', '🎅'];
+  String _selectedAvatar = '🧑';
 
   @override
   void dispose() {
@@ -83,7 +94,31 @@ class _SignupPageState extends State<SignupPage> {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
-              
+
+              // 🖼️ Avatar Picker
+              Text(_selectedAvatar, style: const TextStyle(fontSize: 48)),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                children: _avatars.map((emoji) {
+                  return GestureDetector(
+                    onTap: () => setState(() => _selectedAvatar = emoji),
+                    child: Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: _selectedAvatar == emoji ? Colors.purple : Colors.transparent,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(emoji, style: const TextStyle(fontSize: 28)),
+                    ),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 20),
+
               // 👤 Name Field
               TextFormField(
                 controller: _nameController,
@@ -170,7 +205,7 @@ class _SignupPageState extends State<SignupPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => WelcomeScreen(name: _nameController.text),
+                        builder: (context) => WelcomeScreen(name: _nameController.text, avatar: _selectedAvatar),
                       ),
                     );
                   }
