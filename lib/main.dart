@@ -25,6 +25,27 @@ class SignupPage extends StatefulWidget {
   State<SignupPage> createState() => _SignupPageState();
 }
 
+class WelcomeScreen extends StatelessWidget {
+  final String name;
+  const WelcomeScreen({super.key, required this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Welcome!'),
+        backgroundColor: Colors.purple,
+      ),
+      body: Center(
+        child: Text(
+          'Welcome, $name!',
+          style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+}
+
 class _SignupPageState extends State<SignupPage> {
   // 🔑 The Global Key - acts like a remote control for the form
   final _formKey = GlobalKey<FormState>();
@@ -146,10 +167,10 @@ class _SignupPageState extends State<SignupPage> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Welcome! Account created successfully.'),
-                        backgroundColor: Colors.green,
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WelcomeScreen(name: _nameController.text),
                       ),
                     );
                   }
