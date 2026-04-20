@@ -1,17 +1,54 @@
-# in_class_09_signup_app_part_1
+# Flutter Signup Form - MAD 4360 In-Class Activity 09
 
-A new Flutter project.
+A Flutter signup screen built for MAD 4360 (Mobile App Development). Demonstrates StatefulWidget, form validation, screen navigation, and animations.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **Signup Form**: Name, Email, and Password fields with an `OutlineInputBorder` and prefix icons
+- **Input Validation**: Inline validators that show red error messages on empty or invalid input
 
-A few resources to get you started if this is your first Flutter project:
+## Bonus Challenges Completed
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+- **Confirm Password**: Second password field that validates both values match
+- **Avatar Picker**: Emoji selector that lets users choose a profile avatar before signing up
+- **Screen Navigation**: Successful signup navigates to a `WelcomeScreen` via `Navigator.push` and `MaterialPageRoute`
+- **Celebratory Animation**: `WelcomeScreen` fades in and scales up with an elastic bounce using `AnimationController`
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Widget Tree
+
+```
+MyApp (StatelessWidget)
+└── MaterialApp
+    └── SignupPage (StatefulWidget)
+        └── Scaffold
+            └── Form (keyed with GlobalKey<FormState>)
+                └── Column
+                    ├── Avatar Picker
+                    ├── TextFormField (Name)
+                    ├── TextFormField (Email)
+                    ├── TextFormField (Password)
+                    ├── TextFormField (Confirm Password)
+                    └── ElevatedButton -> WelcomeScreen
+```
+
+## How to Run
+
+```bash
+flutter pub get
+flutter run
+```
+
+## Testing Checklist
+
+- Leave fields empty and tap Sign Up -> expect error messages
+- Enter an email without `@` -> expect email error
+- Enter a password shorter than 6 characters -> expect password error
+- Enter mismatched passwords -> expect confirm password error
+- Fill all fields correctly -> navigates to WelcomeScreen with fade-in animation
+
+## Project Structure
+
+```
+lib/
+└── main.dart       # MyApp, SignupPage, WelcomeScreen
+```
